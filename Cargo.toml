@@ -1,0 +1,14 @@
+[package]
+name = "minecrafto-rust"
+version = "0.1.0"
+edition = "2021"
+description = "Clean-room reverse-engineered Minecraft Java Edition in Rust + WebAssembly + WebGL2"
+
+[lib]
+name = "minecrafto_rust"
+path = "src/lib.rs"
+crate-type = ["cdylib", "rlib"]
+
+[[bin]]
+name = "minecrafto-server"
+path = "src/main.rs"
