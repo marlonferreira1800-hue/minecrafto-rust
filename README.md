@@ -21,6 +21,38 @@ Reimplementação *clean-room* da arquitetura e mecânicas do **Minecraft Java E
 
 ## Como Compilar e Rodar
 
+### No Windows (PowerShell)
+
+#### Opção A — Rodar Imediatamente (Sem precisar instalar o Rust)
+O repositório já inclui o motor WebAssembly pré-compilado (`web/minecraft_rust.wasm`) embutido em `web/index.html` e `index.html`. No **Windows PowerShell**, basta clonar e iniciar o servidor na porta `8080`:
+
+```powershell
+git clone https://github.com/marlonferreira1800-hue/minecrafto-rust.git
+cd minecrafto-rust
+powershell -ExecutionPolicy Bypass -File .\start_windows.ps1
+```
+
+#### Opção B — Instalar o Rust no Windows, Recompilar o WASM e Rodar o Servidor Nativo
+Se quiser compilar o código-fonte Rust (`src/*.rs`) e rodar o servidor HTTP nativo (`cargo run --release`):
+
+```powershell
+# 1. Instalar o Rust + Cargo no Windows via winget:
+winget install Rustlang.Rustup
+
+# 2. Recarregar o PATH na sessão atual do PowerShell e adicionar o target WebAssembly:
+$env:PATH = "$env:USERPROFILE\.cargo\bin;$env:PATH"
+rustup target add wasm32-unknown-unknown
+
+# 3. Entrar na pasta do projeto, compilar o WASM + rodar os testes e subir o servidor na porta 8080:
+cd $HOME\minecrafto-rust
+powershell -ExecutionPolicy Bypass -File .\build_wasm.ps1
+cargo run --release
+```
+
+---
+
+### No Linux / macOS / Git Bash
+
 ```bash
 # 1. Compilar o motor Rust para WebAssembly (web/minecraft_rust.wasm), empacotar web/index.html e rodar os testes:
 ./build_wasm.sh
